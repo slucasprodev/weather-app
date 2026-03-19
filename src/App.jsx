@@ -24,9 +24,7 @@ function App() {
       setError("");
       setWeather(null);
 
-      const res = await fetch(
-        `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&lang=pt_br&appid=${API_KEY}`
-      );
+      const res = await fetch(`/api/weather?city=${city}`);
 
       const data = await res.json();
 
@@ -48,9 +46,7 @@ function App() {
       setError("");
       setWeather(null);
 
-      const res = await fetch(
-        `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&lang=pt_br&appid=${API_KEY}`
-      );
+      const res = await fetch(`/api/weather?lat=${lat}&lon=${lon}`);
 
       const data = await res.json();
 

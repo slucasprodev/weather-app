@@ -1,14 +1,8 @@
 export default async function handler(req, res) {
   try {
-    const { searchParams } = new URL(req.url, `http://${req.headers.host}`);
-    const city = searchParams.get("city");
-    const lat = searchParams.get("lat");
-    const lon = searchParams.get("lon");
+    const { city, lat, lon } = req.query;
 
     const apiKey = process.env.OPENWEATHER_API_KEY;
-
-    
-    console.log("API KEY carregada:", !!apiKey);
 
     if (!apiKey) {
       return res.status(500).json({ error: "API_KEY não configurada" });
@@ -28,8 +22,8 @@ export default async function handler(req, res) {
     const data = await response.json();
 
     if (data.cod !== 200) {
-      return res.status(data.cod).json({
-        error: data.message || "Erro ao buscar dados",
+      return res.status(400).json({
+        message: data.message || "Erro ao buscar dados",
       });
     }
 
