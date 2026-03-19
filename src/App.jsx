@@ -14,7 +14,8 @@ function App() {
   const [time, setTime] = useState(new Date());
   const [isCelsius, setIsCelsius] = useState(true);
 
-  
+  const API_KEY = import.meta.env.VITE_OPENWEATHER_API_KEY;
+
   const fetchWeather = async () => {
     if (!city) return;
 
@@ -23,13 +24,16 @@ function App() {
       setError("");
       setWeather(null);
 
-      const res = await fetch(`/api/weather?city=${city}`);
+      const res = await fetch(
+        `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&lang=pt_br&appid=${API_KEY}`
+      );
+
       const data = await res.json();
 
       if (res.ok) {
         setWeather(data);
       } else {
-        setError(data.error || "Cidade não encontrada");
+        setError(data.message || "Cidade não encontrada");
       }
     } catch {
       setError("Erro ao buscar dados");
@@ -38,20 +42,22 @@ function App() {
     }
   };
 
-  // LOCALIZAÇÃO
   const fetchWeatherByLocation = async (lat, lon) => {
     try {
       setLoading(true);
       setError("");
       setWeather(null);
 
-      const res = await fetch(`/api/weather?lat=${lat}&lon=${lon}`);
+      const res = await fetch(
+        `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&lang=pt_br&appid=${API_KEY}`
+      );
+
       const data = await res.json();
 
       if (res.ok) {
         setWeather(data);
       } else {
-        setError(data.error || "Erro na localização");
+        setError(data.message || "Erro na localização");
       }
     } catch {
       setError("Erro ao buscar localização");
@@ -79,7 +85,6 @@ function App() {
 
   const toggleUnit = () => setIsCelsius(!isCelsius);
 
-  //  RELÓGIO LOCAL DO USUÁRIO
   useEffect(() => {
     const interval = setInterval(() => {
       setTime(new Date());
@@ -88,7 +93,6 @@ function App() {
     return () => clearInterval(interval);
   }, []);
 
-  // 🌡️ TEMP
   const getTemperature = () => {
     if (!weather) return "";
 
@@ -99,7 +103,6 @@ function App() {
       : `${((tempC * 9) / 5 + 32).toFixed(1)}°F`;
   };
 
-  //  ÍCONE CLIMA
   const getWeatherIcon = () => {
     if (!weather) return "";
 
@@ -107,7 +110,6 @@ function App() {
     return `https://openweathermap.org/img/wn/${icon}@2x.png`;
   };
 
-  //  DIA OU NOITE 
   const isDayTime = () => {
     if (!weather) return true;
 
@@ -120,9 +122,8 @@ function App() {
     return localTime >= sunrise && localTime < sunset;
   };
 
-  
   const getBackgroundClass = () => {
-    if (!weather) return "";
+    if (!weather) return "default";
 
     const main = weather.weather[0].main.toLowerCase();
 
@@ -130,13 +131,11 @@ function App() {
     if (main.includes("rain")) return "rainy";
     if (main.includes("clear")) return "sunny";
 
-    return "";
+    return "default";
   };
 
   return (
-    <div className={`app ${getBackgroundClass()}`}>
-
-      {/* FUNDO */}
+    <div className={`app ${getBackgroundClass()} ${!isDayTime() ? "dark" : "light"}`}>
       <div className="sky">
         <img
           src={isDayTime() ? sunImg : moonImg}
@@ -148,12 +147,10 @@ function App() {
         <img src={cloudImg} className="cloud cloud2" alt="cloud" />
       </div>
 
-      {/* HEADER */}
       <header className="header glass">
         <h1>Weather</h1>
       </header>
 
-      {/* SEARCH */}
       <div className="search glass">
         <input
           placeholder="Digite a cidade..."
@@ -205,7 +202,6 @@ function App() {
           </div>
         </div>
       </footer>
-
     </div>
   );
 }
