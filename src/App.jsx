@@ -16,27 +16,32 @@ function App() {
 
   const API_KEY = import.meta.env.VITE_OPENWEATHER_API_KEY;
 
-  // 🔥 BASE URL (CORREÇÃO)
-  const BASE_URL = window.location.origin;
-
   const fetchWeather = async () => {
     if (!city) return;
+
+    console.log("CLICK FUNCIONOU");
+    console.log("API KEY:", API_KEY);
 
     try {
       setLoading(true);
       setError("");
       setWeather(null);
 
-      const res = await fetch(`${BASE_URL}/api/weather?city=${city}`);
+      const res = await fetch(`/api/weather?city=${city}`);
+
+      console.log("RES:", res);
 
       const data = await res.json();
+
+      console.log("DATA:", data);
 
       if (res.ok) {
         setWeather(data);
       } else {
-        setError(data.error || "Cidade não encontrada");
+        setError(data.message || "Cidade não encontrada");
       }
-    } catch {
+    } catch (err) {
+      console.log("ERRO:", err);
       setError("Erro ao buscar dados");
     } finally {
       setLoading(false);
@@ -49,14 +54,14 @@ function App() {
       setError("");
       setWeather(null);
 
-      const res = await fetch(`${BASE_URL}/api/weather?lat=${lat}&lon=${lon}`);
+      const res = await fetch(`/api/weather?lat=${lat}&lon=${lon}`);
 
       const data = await res.json();
 
       if (res.ok) {
         setWeather(data);
       } else {
-        setError(data.error || "Erro na localização");
+        setError(data.message || "Erro na localização");
       }
     } catch {
       setError("Erro ao buscar localização");
