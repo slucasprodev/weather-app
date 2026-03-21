@@ -3,7 +3,7 @@
 Web application that displays real-time weather information for a city searched by the user.
 
 ## 🚀 Demo
-👉 https://wheater-app-sl.vercel.app/
+👉 https://weather-app-xi-teal-55.vercel.app/
 
 ## 📌 About the project
 
