@@ -1,16 +1,32 @@
-# React + Vite
+# 🌦️ Weather App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Web application that displays real-time weather information for a city searched by the user.
 
-Currently, two official plugins are available:
+## 🚀 Demo
+👉 https://wheater-app-sl.vercel.app/
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## 📌 About the project
 
-## React Compiler
+This project was developed with the goal of practicing API consumption, data manipulation, and building dynamic interfaces using JavaScript.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+The application allows searching for any city and viewing updated weather data such as temperature and weather conditions.
 
-## Expanding the ESLint configuration
+## ⚙️ Features
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- 🔍 Real-time city search
+- 🌡️ Display of current temperature
+- ☁️ Weather conditions (e.g., cloudy, sunny, rain)
+- 📡 Consumption of external API
+- 💻 Simple and responsive interface
+
+## 🛠️ Technologies used
+
+- JavaScript
+- HTML
+- CSS
+- Vite
+- OpenWeather API
+
+## 🔌 API Integration
+
+Weather data is obtained through the OpenWeather API, using HTTP requests and JSON data handling.
